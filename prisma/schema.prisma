@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Tag {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  images Image[]
+}
+
+model Image {
+  id    Int  @id @default(autoincrement())
+  index Int? @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tags Tag[]
+
+  parentId Int?
+  parent   Image?  @relation("ParentChildren", fields: [parentId], references: [id])
+  children Image[] @relation("ParentChildren")
+
+  x      Int
+  y      Int
+  width  Int
+  height Int
+
+  sourceId Int
+  source   ImageSource @relation(fields: [sourceId], references: [id])
+}
+
+model ImageSource {
+  id  Int    @id @default(autoincrement())
+  url String @unique
+
+  width  Int
+  height Int
+
+  images Image[]
+}

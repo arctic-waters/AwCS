@@ -1,0 +1,29 @@
+type Tag {
+  id: ID!
+
+  name: String!
+  description: String
+}
+
+type Image {
+  id: ID!
+
+  tags: [Tag!]!
+
+  dimensions: Box!
+  source: ImageSource!
+}
+
+type Box {
+  x: Int!
+  y: Int!
+  width: Int!
+  height: Int!
+}
+
+type ImageSource {
+  url: String!
+
+  width: Int!
+  height: Int!
+}
