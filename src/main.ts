@@ -1,18 +1,18 @@
 import 'dotenv/config';
 
 import express from 'express';
+import path from 'path';
+import { logHttp } from './middleware/morgan.js';
+import { configure as configureAdmin } from './routes/admin.js';
+import { configure as configureGraphQL } from './routes/api.js';
 import { log } from './services/log.js';
 import { prisma } from './services/prisma.js';
-import { logHttp } from './middleware/morgan.js';
-import { configure as configureApi } from './routes/api.js';
-import { configure as configureAdmin } from './routes/admin.js';
 import { __dirname } from './util/path.js';
-import path from 'path';
 
 const { PORT = 3000 } = process.env;
 
 const ROUTES = [
-  { prefix: '/api', configure: configureApi },
+  { prefix: '/api', configure: configureGraphQL },
   { prefix: '/admin', configure: configureAdmin },
 ];
 
