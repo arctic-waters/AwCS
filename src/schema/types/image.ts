@@ -13,6 +13,16 @@ schema.prismaObject('Image', {
       description: 'The unique index number of the image. Only root images have an index.',
     }),
 
+    name: t.exposeString('name', {
+      nullable: true,
+      description: 'The name of the image.',
+    }),
+
+    description: t.exposeString('description', {
+      nullable: true,
+      description: 'The description of the image.',
+    }),
+
     children: t.relation('children', {
       description: 'All the images that are direct children of this image.',
     }),

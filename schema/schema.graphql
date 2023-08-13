@@ -24,6 +24,9 @@ type Image {
   """All the images that are direct children of this image."""
   children: [Image!]!
 
+  """The description of the image."""
+  description: String
+
   """The dimensions of the image."""
   dimensions: Box!
 
@@ -32,6 +35,9 @@ type Image {
 
   """The unique index number of the image. Only root images have an index."""
   index: Int
+
+  """The name of the image."""
+  name: String
 
   """The image that is the direct parent of this image."""
   parent: Image!

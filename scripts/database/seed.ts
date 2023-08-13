@@ -1,9 +1,9 @@
-import * as fs from 'fs/promises';
-import * as path from 'path';
 import { PrismaClient } from '@prisma/client';
-import { promisify } from 'util';
-import prompts from 'prompts';
+import * as fs from 'fs/promises';
 import { imageSize } from 'image-size';
+import * as path from 'path';
+import prompts from 'prompts';
+import { promisify } from 'util';
 
 const sizeOf = promisify(imageSize);
 
@@ -69,6 +69,7 @@ async function main() {
         index: parseInt(fileName.slice(0, -4)) + 1,
         x: 0,
         y: 0,
+        name: meta.title,
         width,
         height,
         source: { connect: { id: imageSource.id } },

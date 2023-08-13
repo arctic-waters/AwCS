@@ -26,6 +26,9 @@ model Image {
   id    Int  @id @default(autoincrement())
   index Int? @unique
 
+  name        String?
+  description String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
