@@ -88,10 +88,10 @@ async function main() {
 
       const image = await prisma.image.create({
         data: {
-          x: left,
-          y: top,
-          width: right - left,
-          height: bottom - top,
+          x: Math.min(left, right),
+          y: Math.min(top, bottom),
+          width: Math.abs(right - left),
+          height: Math.abs(bottom - top),
           parent: { connect: { id: baseImage.id } },
           source: { connect: { id: imageSource.id } },
           tags: {
