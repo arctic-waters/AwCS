@@ -71,9 +71,7 @@ async function main() {
         y: 0,
         width,
         height,
-        source: {
-          connect: { url: imageSource.url },
-        },
+        source: { connect: { id: imageSource.id } },
         tags: {
           connectOrCreate: {
             where: { name: 'base' },
@@ -93,9 +91,8 @@ async function main() {
           y: top,
           width: right - left,
           height: bottom - top,
-          source: {
-            connect: { url: imageSource.url },
-          },
+          parent: { connect: { id: baseImage.id } },
+          source: { connect: { id: imageSource.id } },
           tags: {
             connectOrCreate: tags.map((tag) => ({ where: { name: tag }, create: { name: tag } })),
           },

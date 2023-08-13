@@ -1,0 +1,171 @@
+"""A set of dimensions for a rectangle, with an origin at the top left."""
+type Box {
+  """The height of the box."""
+  height: Int!
+
+  """The width of the box."""
+  width: Int!
+
+  """The x coordinate of the top left corner."""
+  x: Int!
+
+  """The y coordinate of the top left corner."""
+  y: Int!
+}
+
+input BoxInput {
+  height: Int!
+  width: Int!
+  x: Int!
+  y: Int!
+}
+
+type Image {
+  """All the images that are direct children of this image."""
+  children: [Image!]!
+
+  """The dimensions of the image."""
+  dimensions: Box!
+
+  """The unique ID of the image."""
+  id: ID!
+
+  """The unique index number of the image. Only root images have an index."""
+  index: Int
+
+  """The image that is the direct parent of this image."""
+  parent: Image!
+
+  """The source of the image."""
+  source: ImageSource!
+
+  """All the tags that are associated with this image."""
+  tags: [Tag!]!
+}
+
+input ImageCreateInput {
+  box: BoxInput!
+  index: Int
+  parent: ID
+  sourceUrl: String!
+  tags: [String!]
+}
+
+type ImageSource {
+  """The height of the image source."""
+  height: Int!
+
+  """All the images that have this source."""
+  images: [Image!]!
+
+  """The unique URL of the image source."""
+  url: String!
+
+  """The width of the image source."""
+  width: Int!
+}
+
+input ImageUpdateInput {
+  index: Int
+  parent: ID
+  tags: [String!]
+}
+
+type Mutation {
+  """Create a new image."""
+  createImage(
+    """The data to create the image with."""
+    input: ImageCreateInput!
+  ): Image
+
+  """Create a new image source with the given URL."""
+  createImageSource(
+    """The URL of the image source."""
+    url: String!
+  ): ImageSource
+
+  """Create a new tag with the given name and an optional description."""
+  createTag(
+    """The description of the tag."""
+    description: String
+
+    """The name of the tag."""
+    name: String!
+  ): Tag!
+
+  """Delete an existing image."""
+  deleteImage(
+    """The ID of the image to delete."""
+    id: ID!
+  ): Boolean!
+
+  """Delete an image source with the given URL."""
+  deleteImageSource(
+    """The URL of the image source."""
+    url: String!
+  ): Boolean!
+
+  """Delete a tag by its name."""
+  deleteTag(
+    """The name of the tag."""
+    name: String!
+  ): Boolean!
+
+  """Update an existing image."""
+  updateImage(
+    """The ID of the image to update."""
+    id: ID!
+
+    """The data to update the image with."""
+    input: ImageUpdateInput!
+  ): Image
+
+  """Update the description of a tag."""
+  updateTag(
+    """The new description of the tag."""
+    description: String
+
+    """The name of the tag."""
+    name: String!
+  ): Tag
+}
+
+type Query {
+  """All the images in the database."""
+  images: [Image!]!
+
+  """Search for images with the given query."""
+  queryImages(
+    """The query to search for."""
+    query: String!
+  ): [Image!]!
+
+  """Search for images with any of the provided tags or parent image."""
+  searchImages(
+    """The ID of the parent image."""
+    parent: ID
+
+    """The tags to search for."""
+    tags: [String!]
+  ): [Image!]!
+
+  """Get a tag by its name."""
+  tag(
+    """The name of the tag."""
+    name: String!
+  ): Tag
+
+  """All available tags."""
+  tags: [Tag!]!
+}
+
+type Tag {
+  """The description of the tag."""
+  description: String
+
+  """All the images that have this tag."""
+  images: [Image!]!
+
+  """The unique name of the tag."""
+  name: String!
+}
