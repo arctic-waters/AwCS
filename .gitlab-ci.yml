@@ -5,4 +5,5 @@ build:
   before_script:
     - yarn
   script:
+    - yarn db:generate
     - yarn build
