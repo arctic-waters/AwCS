@@ -1,15 +1,8 @@
 image: node:latest
 
-stages:
-  - build
-  - test
-
-install:
-  stage: build
-  script:
-    - yarn
-
 build:
   stage: build
+  before_script:
+    - yarn
   script:
     - yarn build
